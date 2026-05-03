@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Question Bank</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Question Bank</h1>
+  </header>
+  <main class="layout">
+    <!-- Form -->
+    <section class="card" id="panel-form">
+      <h2>Add entry</h2>
+      <form id="form">
+        <label>Topic *
+          <input name="topic" required placeholder="e.g. Arrays" />
+        </label>
+        <label>Subtopic
+          <input name="subtopic" placeholder="e.g. Two pointers" />
+        </label>
+        <label>Reference
+          <input name="reference" placeholder="Book / URL / notes" />
+        </label>
+        <label>Question *
+          <textarea name="question" rows="8" required placeholder="Paste problem statement…"></textarea>
+        </label>
+        <label>Solution *
+          <textarea name="solution" rows="10" required placeholder="Write your solution…"></textarea>
+        </label>
+        <label>Images (optional)
+          <input id="imgs" name="images" type="file" multiple accept="image/*" />
+        </label>
+        <button type="submit">Save</button>
+        <p id="msg"></p>
+      </form>
+    </section>
+
+    <!-- Drag handle -->
+    <div id="splitter"></div>
+
+    <!-- List -->
+    <section class="card" id="panel-list">
+      <div class="list-header">
+        <h2>Entries</h2>
+        <button onclick="load()">Refresh</button>
+      </div>
+      <div id="list"></div>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
