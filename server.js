@@ -46,7 +46,7 @@ app.get("/", (_req, res) =>
 // ── GET all entries (hydrated with file contents for display) ─────────────────
 app.get("/api/entries", (_req, res) => {
   const entries = readJSON();
-  const hydrated = entries.map(e => {
+  const hydrated = entries.slice(-10).map(e => {
     const qFile = path.join(DATA, e.question);
     const sFile = path.join(DATA, e.solution);
     return {
