@@ -28,8 +28,8 @@ load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "Data")
 JSON_FILE = os.path.join(DATA_DIR, "questions.json")
 OLLAMA_CLOUD_HOST = "https://ollama.com"
-POST_CALL_DELAY_SEC = 10   # pause between calls to avoid rate-limit hangs
-REQUEST_TIMEOUT_SEC = 120  # per-request timeout; raises error instead of hanging
+POST_CALL_DELAY_SEC = 5    # pause between calls to avoid rate-limit hangs
+REQUEST_TIMEOUT_SEC = 600  # per-request timeout; raises error instead of hanging
 SYSTEM_PROMPT = "You are expert computer science tutor. Answer the the given question step by step. Begin by explaining your reasoning process clearly. Think step by step before answering the question."
 
 
@@ -62,6 +62,11 @@ def load_entries() -> list[dict]:
 
 
 def ask(client: Client, entry: dict, model: str, out_dir: str) -> bool:
+    out_path = os.path.join(out_dir, f"{entry['id']}.txt")
+    if os.path.exists(out_path):
+        print(f"  [SKIP] #{entry['id']} — already answered")
+        return False
+
     question_text = read_file(entry["question"])
     if not question_text:
         print(f"  [SKIP] #{entry['id']} — question file missing")
@@ -80,16 +85,12 @@ def ask(client: Client, entry: dict, model: str, out_dir: str) -> bool:
 
     response = client.chat(
         model=model,
-        messages=[
-            system_message,
-            user_message,
-        ],
+        messages=[system_message, user_message],
         options={"temperature": 0},
     )
 
     answer = response["message"]["content"].strip()
 
-    out_path = os.path.join(out_dir, f"{entry['id']}.txt")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(answer)
 

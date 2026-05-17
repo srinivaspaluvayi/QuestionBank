@@ -34,9 +34,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 OLLAMA_CLOUD_HOST  = "https://ollama.com"
 POST_CALL_DELAY_SEC = 10
 REQUEST_TIMEOUT_SEC = 120
-DEFAULT_JSON        = os.path.join(
-    os.path.dirname(__file__), "..", "..", "Downloads", "book1.json"
-)
+DEFAULT_JSON        = os.path.join(os.path.dirname(__file__), "book1.json")
 SYSTEM_PROMPT = (
     "You are an expert computer science and networking tutor. "
     "Answer each sub-question step by step. "
